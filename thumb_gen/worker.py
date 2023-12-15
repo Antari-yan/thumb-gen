@@ -1,6 +1,7 @@
 import os
 import re
 import tempfile
+from pathlib import Path
 
 from .application   import screenshots, resize, timestamps, thumb
 from .viewer        import print_process, print_success
@@ -47,12 +48,12 @@ class Generator:
             raise ValueError("'columns' value must be greater than 3")
 
         if output_path == '':
-            self.output_path = self.video_path[:-4]
+            self.output_path = Path(self.video_path).stem
             self.output_folder = listToString(re.split(pattern = r"[/\\]", string = self.video_path)[:-1], "sys")
 
         else:
             self.filename = re.split(pattern = r"[/\\]", string = self.video_path)[-1]
-            self.output_path = os.path.join(output_path, self.filename[:-4])
+            self.output_path = os.path.join(output_path, Path(self.filename).stem)
             self.output_folder = self.output_path
 
         self.custom_text = str(custom_text)
